@@ -1,0 +1,106 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Music, Lightbulb, Monitor, User, Layers, Sparkles } from "lucide-react";
+
+export default function NovaEraSomELuz() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const images = [
+    "/mnt/data/361238ac-d618-4ed4-b317-73a7eed1d9fb.jpg",
+    "/mnt/data/51873650-430a-4ff4-96eb-bbdc73c9be73.jpg",
+    "/mnt/data/69e8fa28-391e-4391-984f-19d81b135fe2.jpg",
+  ];
+
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  return (
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+      <header className="text-center py-10">
+        <img
+          src="/mnt/data/cdf3403c-9b14-40e9-92da-ec9755a476f8.jpg"
+          alt="Logo Nova Era Som e Luz"
+          className="mx-auto w-40 mb-4 rounded-full shadow-lg"
+        />
+        <h1 className="text-5xl font-bold text-orange-500">NOVA ERA SOM & LUZ</h1>
+        <p className="text-lg text-gray-300">A MELHOR OPÇÃO PARA O SEU EVENTO!</p>
+      </header>
+
+      {/* Galeria de Imagens */}
+      <motion.div className="relative w-full max-w-4xl h-96 overflow-hidden rounded-2xl shadow-2xl">
+        <Image
+          src={images[currentIndex]}
+          alt={`Evento ${currentIndex + 1}`}
+          layout="fill"
+          objectFit="cover"
+          className="transition-all duration-700"
+        />
+        <Button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-orange-600 hover:bg-orange-700"
+        >
+          ◀
+        </Button>
+        <Button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-orange-600 hover:bg-orange-700"
+        >
+          ▶
+        </Button>
+      </motion.div>
+
+      {/* Seção de Serviços */}
+      <section className="py-16 text-center w-full max-w-6xl">
+        <h2 className="text-4xl font-bold text-orange-500 mb-6">
+          Transformamos seu evento em um espetáculo de som e luz!
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { icon: <Music size={40} />, title: "Som Profissional" },
+            { icon: <Lightbulb size={40} />, title: "Iluminação Cênica" },
+            { icon: <Monitor size={40} />, title: "Telão / Projetor" },
+            { icon: <User size={40} />, title: "DJ e Operador de Som" },
+            { icon: <Layers size={40} />, title: "Palco e Estrutura Metálica" },
+            { icon: <Sparkles size={40} />, title: "Efeitos Especiais" },
+          ].map((service, index) => (
+            <motion.div
+              key={index}
+              className="bg-zinc-900 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center hover:scale-105 transition-transform duration-300"
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-orange-500 mb-3">{service.icon}</div>
+              <h3 className="text-lg font-semibold text-gray-200">{service.title}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contato */}
+      <section className="py-10 text-center">
+        <h2 className="text-3xl font-bold text-orange-500 mb-4">Entre em Contato</h2>
+        <p className="text-gray-300 mb-2">📍 Itaqui - RS</p>
+        <p className="text-gray-300 mb-2">📧 somnovaera@live.com</p>
+        <p className="text-gray-300 mb-6">📞 +55 55 99709-0535</p>
+        <Button
+          className="bg-green-600 hover:bg-green-700 text-lg px-6 py-3 rounded-full"
+          asChild
+        >
+          <a
+            href="https://wa.me/5555997090535"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Fale Conosco pelo WhatsApp
+          </a>
+        </Button>
+      </section>
+
+      <footer className="py-6 text-sm text-gray-500">
+        © {new Date().getFullYear()} Nova Era Som & Luz. Todos os direitos reservados.
+      </footer>
+    </div>
+  );
+}
